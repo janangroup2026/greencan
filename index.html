@@ -1,1 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Cinzel+Decorative:wght@300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    :root {
+      --bg: #01332d;
+      --glow: #00e8a2;
+      --text: #c8f0e2;
+      --text-dim: rgba(200, 240, 226, 0.45);
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Subtle noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient radial glow in bg */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 160, 100, 0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: ambientPulse 5s ease-in-out infinite;
+    }
+
+    @keyframes ambientPulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1; }
+    }
+
+    /* ── Main container ── */
+    .stage {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.8rem;
+    }
+
+    /* ── Image: glow applied directly via filter, no shape clipping ── */
+    .logo {
+      display: block;
+      width: 220px;
+      /* let PNG transparency stay fully intact — no border-radius, no clip */
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0  6px rgba(0, 232, 162, 0.25))
+          drop-shadow(0 0 18px rgba(0, 232, 162, 0.10));
+        opacity: 0.82;
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 18px rgba(0, 232, 162, 0.80))
+          drop-shadow(0 0 48px rgba(0, 232, 162, 0.35))
+          drop-shadow(0 0 90px rgba(0, 232, 162, 0.15));
+        opacity: 1;
+      }
+    }
+
+    /* ── Text block ── */
+    .copy {
+      text-align: center;
+      animation: fadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .headline {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 300;
+      font-size: clamp(1.05rem, 4vw, 1.65rem);
+      color: var(--text);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .sub {
+      margin-top: 0.7rem;
+      font-size: clamp(0.78rem, 2.5vw, 0.95rem);
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      font-weight: 300;
+    }
+
+    /* ── Thin divider line ── */
+    .divider {
+      width: 44px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glow), transparent);
+      margin: 0 auto 0.8rem;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 0.85; }
+    }
+
+    /* ── Corner accents ── */
+    .corner {
+      position: fixed;
+      width: 44px;
+      height: 44px;
+      opacity: 0.22;
+    }
+    .corner--tl { top: 24px; left: 24px; border-top: 1px solid var(--glow); border-left: 1px solid var(--glow); }
+    .corner--tr { top: 24px; right: 24px; border-top: 1px solid var(--glow); border-right: 1px solid var(--glow); }
+    .corner--bl { bottom: 24px; left: 24px; border-bottom: 1px solid var(--glow); border-left: 1px solid var(--glow); }
+    .corner--br { bottom: 24px; right: 24px; border-bottom: 1px solid var(--glow); border-right: 1px solid var(--glow); }
+  </style>
+</head>
+<body>
+
+  <div class="corner corner--tl"></div>
+  <div class="corner corner--tr"></div>
+  <div class="corner corner--bl"></div>
+  <div class="corner corner--br"></div>
+
+  <div class="stage">
+
+    <!-- ── Replace "logo.png" with your actual filename ── -->
+    <img class="logo" src="greencan.png" alt="Logo" />
+
+    <div class="copy">
+      <div class="divider"></div>
+      <h1 class="headline">Coming Soon</h1>
+      <p class="sub">Something is growing here</p>
+    </div>
+
+  </div>
+
+</body>
+</html>
