@@ -4,8 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coming Soon</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Cinzel+Decorative:wght@300&display=swap" rel="stylesheet" />
   <style>
+    @font-face {
+      font-family: 'Ubuntu';
+      src: url('Ubuntu-B.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -30,7 +36,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Ubuntu', sans-serif;
       overflow: hidden;
       position: relative;
     }
@@ -72,11 +78,10 @@
       gap: 2.8rem;
     }
 
-    /* ── Image: glow applied directly via filter, no shape clipping ── */
+    /* ── Image: glow breathes via filter, no shape ── */
     .logo {
       display: block;
       width: 220px;
-      /* let PNG transparency stay fully intact — no border-radius, no clip */
       animation: breathe 4s ease-in-out infinite;
     }
 
@@ -108,22 +113,27 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* First text — bold */
     .headline {
-      font-family: 'Cinzel Decorative', serif;
-      font-weight: 300;
-      font-size: clamp(1.05rem, 4vw, 1.65rem);
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 4vw, 1.7rem);
       color: var(--text);
-      letter-spacing: 0.24em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       line-height: 1.3;
     }
 
+    /* Second text — regular (Ubuntu-B only has bold glyphs,
+       so we use a lighter weight via font-weight: 400 which
+       the browser will render thinner relative to the bold above) */
     .sub {
       margin-top: 0.7rem;
-      font-size: clamp(0.78rem, 2.5vw, 0.95rem);
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 400;
+      font-size: clamp(0.8rem, 2.5vw, 1rem);
       color: var(--text-dim);
       letter-spacing: 0.2em;
-      font-weight: 300;
     }
 
     /* ── Thin divider line ── */
@@ -162,7 +172,6 @@
 
   <div class="stage">
 
-    <!-- ── Replace "logo.png" with your actual filename ── -->
     <img class="logo" src="greencan.png" alt="Logo" />
 
     <div class="copy">
