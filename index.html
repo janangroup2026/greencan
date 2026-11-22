@@ -1,186 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coming Soon</title>
-  <style>
-    @font-face {
-      font-family: 'Ubuntu';
-      src: url('Ubuntu-B.ttf') format('truetype');
-      font-weight: 700;
-      font-style: normal;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #01332d;
-      --glow: #00e8a2;
-      --text: #c8f0e2;
-      --text-dim: rgba(200, 240, 226, 0.45);
-    }
-
-    html, body {
-      height: 100%;
-      width: 100%;
-    }
-
-    body {
-      background-color: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      font-family: 'Ubuntu', sans-serif;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Subtle noise texture overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Ambient radial glow in bg */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 160, 100, 0.10) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      animation: ambientPulse 5s ease-in-out infinite;
-    }
-
-    @keyframes ambientPulse {
-      0%, 100% { opacity: 0.5; }
-      50%       { opacity: 1; }
-    }
-
-    /* ── Main container ── */
-    .stage {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2.8rem;
-    }
-
-    /* ── Image: glow breathes via filter, no shape ── */
-    .logo {
-      display: block;
-      width: 220px;
-      animation: breathe 4s ease-in-out infinite;
-    }
-
-    @keyframes breathe {
-      0%, 100% {
-        filter:
-          drop-shadow(0 0  6px rgba(0, 232, 162, 0.25))
-          drop-shadow(0 0 18px rgba(0, 232, 162, 0.10));
-        opacity: 0.82;
-      }
-      50% {
-        filter:
-          drop-shadow(0 0 18px rgba(0, 232, 162, 0.80))
-          drop-shadow(0 0 48px rgba(0, 232, 162, 0.35))
-          drop-shadow(0 0 90px rgba(0, 232, 162, 0.15));
-        opacity: 1;
-      }
-    }
-
-    /* ── Text block ── */
-    .copy {
-      text-align: center;
-      animation: fadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-      animation-delay: 0.4s;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* First text — bold */
-    .headline {
-      font-family: 'Ubuntu', sans-serif;
-      font-weight: 700;
-      font-size: clamp(1.1rem, 4vw, 1.7rem);
-      color: var(--text);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      line-height: 1.3;
-    }
-
-    /* Second text — regular (Ubuntu-B only has bold glyphs,
-       so we use a lighter weight via font-weight: 400 which
-       the browser will render thinner relative to the bold above) */
-    .sub {
-      margin-top: 0.7rem;
-      font-family: 'Ubuntu', sans-serif;
-      font-weight: 400;
-      font-size: clamp(0.8rem, 2.5vw, 1rem);
-      color: var(--text-dim);
-      letter-spacing: 0.2em;
-    }
-
-    /* ── Thin divider line ── */
-    .divider {
-      width: 44px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--glow), transparent);
-      margin: 0 auto 0.8rem;
-      animation: shimmer 4s ease-in-out infinite;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { opacity: 0.3; }
-      50%       { opacity: 0.85; }
-    }
-
-    /* ── Corner accents ── */
-    .corner {
-      position: fixed;
-      width: 44px;
-      height: 44px;
-      opacity: 0.22;
-    }
-    .corner--tl { top: 24px; left: 24px; border-top: 1px solid var(--glow); border-left: 1px solid var(--glow); }
-    .corner--tr { top: 24px; right: 24px; border-top: 1px solid var(--glow); border-right: 1px solid var(--glow); }
-    .corner--bl { bottom: 24px; left: 24px; border-bottom: 1px solid var(--glow); border-left: 1px solid var(--glow); }
-    .corner--br { bottom: 24px; right: 24px; border-bottom: 1px solid var(--glow); border-right: 1px solid var(--glow); }
-  </style>
-</head>
-<body>
-
-  <div class="corner corner--tl"></div>
-  <div class="corner corner--tr"></div>
-  <div class="corner corner--bl"></div>
-  <div class="corner corner--br"></div>
-
-  <div class="stage">
-
-    <img class="logo" src="greencan.png" alt="Logo" />
-
-    <div class="copy">
-      <div class="divider"></div>
-      <h1 class="headline">Coming Soon</h1>
-      <p class="sub">Something is growing here</p>
-    </div>
-
-  </div>
-
-</body>
-</html>
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#042a23"><meta name="description" content="Dalo Green Can — More Than a CAN. A planned aluminium beverage can manufacturing project in Kirkuk, Iraq."><title>Dalo Green Can | More Than a CAN.</title><link rel="icon" href="greencan-logo.png"><style>
+@font-face{font-family:Marzouk;src:url('./Marzouk.ttf') format('truetype');font-weight:400;font-display:swap}
+:root{--dark:#031e19;--forest:#07382f;--lime:#87d20a;--white:#f7fcf7;--muted:#bdd3c9}
+*{box-sizing:border-box}html{background:var(--dark)}body{margin:0;min-height:100vh;min-height:100svh;color:var(--white);font-family:Marzouk,'Segoe UI',Tahoma,Arial,sans-serif;background:radial-gradient(ellipse at 50% 48%,#105142 0%,#063329 48%,#021b17 100%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(115deg,transparent 0,transparent 115px,#c5ff9210 116px,transparent 117px);mask-image:linear-gradient(90deg,transparent,#0007,transparent);animation:ambient 16s ease-in-out infinite}
+.shell{position:relative;max-width:1500px;margin:auto;min-height:100svh;display:flex;flex-direction:column;padding:clamp(20px,3vw,44px) clamp(20px,5vw,80px)}
+header,footer{display:flex;justify-content:space-between;align-items:center;gap:20px}header{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#c7e2d3}.status{display:flex;gap:10px;align-items:center;color:#b2d1b8}.dot{width:7px;height:7px;background:var(--lime);border-radius:50%;box-shadow:0 0 15px var(--lime);animation:pulse 2.3s infinite}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 0}.hero{width:100%;max-width:1000px;text-align:center}.eyebrow{font-size:11px;letter-spacing:.32em;color:#b7df9b;text-transform:uppercase;margin:0 0 27px}
+.brand{width:min(75vw,540px);height:auto;max-height:280px;object-fit:contain;display:block;margin:auto;filter:drop-shadow(0 20px 28px #00180f80);animation:brandIn 1.35s cubic-bezier(.16,1,.3,1) both,brandBreathe 7s ease-in-out 1.35s infinite}
+.accent{height:2px;width:86px;margin:30px auto 28px;background:var(--lime);box-shadow:0 0 20px #9be53e80;animation:accentGrow 1.2s .4s both}
+.stage{display:grid;place-items:center;min-height:205px;position:relative}.slide{grid-area:1/1;width:100%;opacity:0;visibility:hidden;transform:translateY(22px) scale(.98);filter:blur(8px);transition:opacity .75s ease,transform .9s cubic-bezier(.2,.8,.2,1),filter .75s,visibility .75s}.slide.active{opacity:1;visibility:visible;transform:translateY(0) scale(1);filter:blur(0)}.kicker{margin:0 0 12px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#b2e484}.slide[lang=ar] .kicker{letter-spacing:0;font-size:17px}
+h1,h2{font-weight:400;font-size:clamp(42px,6vw,82px);line-height:1.22;letter-spacing:-.035em;margin:0}h1 strong,h2 strong{font-weight:800;color:#a4eb42}.slide[lang=ar] h2{font-size:clamp(35px,5.4vw,73px);letter-spacing:0;line-height:1.48}.sub{font-size:clamp(15px,1.7vw,19px);color:var(--muted);line-height:1.7;margin:13px auto 0;max-width:800px}.sub strong{font-weight:800;color:var(--white)}
+.controls{display:flex;justify-content:center;gap:7px;margin:25px 0 0}.controls button{background:transparent;border:0;padding:10px 5px;cursor:pointer}.controls span{display:block;width:23px;height:3px;border-radius:3px;background:#77998a;transition:width .4s,background .4s}.controls button[aria-current=true] span{width:46px;background:var(--lime)}.controls button:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+footer{border-top:1px solid #d4f6df29;padding-top:18px}.parent{display:flex;align-items:center;gap:16px}.parent-logo{width:clamp(115px,13vw,165px);height:auto;max-height:72px;object-fit:contain;background:#fff;border-radius:5px;padding:8px 10px}.parent-caption{font-size:11px;letter-spacing:.13em;line-height:1.8;color:#c3d8cd}.place{text-align:right;color:#c3d8cd;font-size:11px;line-height:1.9;letter-spacing:.09em}.place strong{font-weight:700;color:white}
+@keyframes brandIn{from{opacity:0;transform:translateY(30px) scale(.88);filter:blur(14px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0) drop-shadow(0 20px 28px #00180f80)}}@keyframes brandBreathe{50%{transform:translateY(-9px) scale(1.018)}}@keyframes accentGrow{from{width:0;opacity:0}to{width:86px;opacity:1}}@keyframes pulse{50%{opacity:.35;box-shadow:0 0 4px var(--lime)}}@keyframes ambient{50%{transform:translateX(3%)}}
+@media(max-width:680px){.shell{padding:20px}.eyebrow{font-size:9px;letter-spacing:.13em;margin-bottom:15px}header{font-size:9px;letter-spacing:.09em}.brand{width:min(89vw,490px)}.accent{margin:21px auto}.stage{min-height:245px}h1,h2{font-size:clamp(35px,9vw,53px)}.slide[lang=ar] h2{font-size:clamp(31px,8vw,48px)}.sub{font-size:14px}.parent-caption{font-size:9px}.parent-logo{width:105px}.place{font-size:9px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.slide{display:none}.slide.active{display:block;opacity:1;visibility:visible;transform:none;filter:none}}
+</style></head><body><div class="shell"><header><span>DALOGREEN CAN <span style="color:#8bce65">/ IRAQ</span></span><span class="status"><i class="dot" aria-hidden="true"></i>COMING SOON</span></header><main><div class="hero"><p class="eyebrow">A NEW CHAPTER IN INDUSTRIAL MANUFACTURING</p><img class="brand" src="./greencan-logo.png" alt="Official Dalo Green Can logo" width="540" height="340"><div class="accent"></div><div class="stage" id="stage">
+<section class="slide active" lang="en"><p class="kicker">OUR PROMISE</p><h1>More Than a <strong>CAN.</strong></h1><p class="sub">A new chapter in <strong>aluminium beverage packaging.</strong></p></section>
+<section class="slide" lang="ar" dir="rtl"><p class="kicker">شعارنا</p><h2>أكثر من مجرد <strong>علبة.</strong></h2><p class="sub">مشروع لصناعة <strong>علب المشروبات المصنوعة من الألمنيوم</strong> في كركوك، العراق.</p></section>
+<section class="slide" lang="en"><p class="kicker">OUR COMPANY</p><h2><span>Dalo </span><strong>Green Can</strong></h2><p class="sub"><strong>Planned aluminium beverage can manufacturing</strong> · Kirkuk, Iraq</p></section>
+<section class="slide" lang="ar" dir="rtl"><p class="kicker">اسم الشركة</p><h2><span>دلو </span><strong>علبة الخضراء</strong></h2><p class="sub">مشروع صناعي في <strong>كركوك، العراق</strong></p></section>
+</div><div class="controls" aria-label="Choose message"><button type="button" aria-label="English slogan" aria-current="true"><span></span></button><button type="button" aria-label="Arabic slogan" aria-current="false"><span></span></button><button type="button" aria-label="English company name" aria-current="false"><span></span></button><button type="button" aria-label="Arabic company name" aria-current="false"><span></span></button></div></div></main><footer><div class="parent"><img class="parent-logo" src="./dalo-logo.png" alt="Official DALO Group Companies logo" width="165" height="75"><span class="parent-caption">A DALO GROUP<br>COMPANY</span></div><div class="place"><strong>KIRKUK · IRAQ</strong><br>www.dalogreencan.com</div></footer></div><script>
+(()=>{const slides=[...document.querySelectorAll('.slide')],buttons=[...document.querySelectorAll('.controls button')],reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;let current=0,timer;function show(n){current=(n+slides.length)%slides.length;slides.forEach((s,i)=>{s.classList.toggle('active',i===current);s.setAttribute('aria-hidden',String(i!==current))});buttons.forEach((b,i)=>b.setAttribute('aria-current',String(i===current)))}function restart(){clearInterval(timer);if(!reduced&&!document.hidden)timer=setInterval(()=>show(current+1),5100)}buttons.forEach((b,i)=>b.addEventListener('click',()=>{show(i);restart()}));document.addEventListener('visibilitychange',restart);show(0);restart()})();
+</script></body></html>
